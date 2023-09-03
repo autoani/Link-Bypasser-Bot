@@ -433,12 +433,12 @@ def docthread(message):
     app.edit_message_text(message.chat.id, msg.id, f'__{links}__', disable_web_page_preview=True)
     remove(file)
 
-
 # files
-@app.on_message([filters.document,filters.photo,filters.video])
+@app.on_message([filters.document, filters.photo, filters.video])
 def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-        if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
+
     if UPDATES_CHANNEL is not None:
         try:
             user = client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
@@ -474,7 +474,7 @@ def docfile(client: pyrogram.client.Client, message: pyrogram.types.messages_and
             return
 
     try:
-        if message.document.file_name.endswith("dlc"):
+        if message.document and message.document.file_name.endswith("dlc"):
             bypass = threading.Thread(target=lambda: docthread(message), daemon=True)
             bypass.start()
             return
