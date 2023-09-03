@@ -1,6 +1,6 @@
 import pyrogram
-from pyrogram import Client,filters
-from pyrogram.types import InlineKeyboardMarkup,InlineKeyboardButton
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ, remove
 from threading import Thread
 from json import load
@@ -18,17 +18,18 @@ from forcesub import handle_force_subscribe
 
 botStartTime = time()
 
-
 # bot
-with open('config.json', 'r') as f: DATA = load(f)
-def getenv(var): return environ.get(var) or DATA.get(var, None)
+with open('config.json', 'r') as f:
+    DATA = load(f)
+
+def getenv(var):
+    return environ.get(var) or DATA.get(var, None)
 
 bot_token = getenv("TOKEN")
-api_hash = getenv("HASH") 
+api_hash = getenv("HASH")
 api_id = getenv("ID")
 
-app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
-
+app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # stats command
 @app.on_message(filters.command(["stats"]))
@@ -92,29 +93,34 @@ async def stats_command(_, message):
         text=stats
 )
 
-
-# handle ineex
-def handleIndex(ele,message,msg):
+# handle index
+def handleIndex(ele, message, msg):
     result = bypasser.scrapeIndex(ele)
-    try: app.delete_messages(message.chat.id, msg.id)
-    except: pass
-    for page in result: app.send_message(message.chat.id, page, reply_to_message_id=message.id, disable_web_page_preview=True)
-
+    try:
+        app.delete_messages(message.chat.id, msg.id)
+    except:
+        pass
+    for page in result:
+        app.send_message(message.chat.id, page, reply_to_message_id=message.id, disable_web_page_preview=True)
 
 # loop thread
-def loopthread(message,otherss=False):
+def loopthread(message, otherss=False):
 
     urls = []
-    if otherss: texts = message.caption
-    else: texts = message.text
+    if otherss:
+        texts = message.caption
+    else:
+        texts = message.text
 
-    if texts in [None,""]: return
+    if texts in [None, ""]:
+        return
     for ele in texts.split():
         if "http://" in ele or "https://" in ele:
             urls.append(ele)
-    if len(urls) == 0: return
+    if len(urls) == 0:
+        return
 
-    if bypasser.ispresent(bypasser.ddl.ddllist,urls[0]):
+    if bypasser.ispresent(bypasser.ddl.ddllist, urls[0]):
         msg = app.send_message(message.chat.id, "⚡ __generating...__", reply_to_message_id=message.id)
     elif freewall.pass_paywall(urls[0], check=True):
         msg = app.send_message(message.chat.id, "🕴️ __jumping the wall...__", reply_to_message_id=message.id)
@@ -129,22 +135,26 @@ def loopthread(message,otherss=False):
     temp = None
     for ele in urls:
         if search(r"https?:\/\/(?:[\w.-]+)?\.\w+\/\d+:", ele):
-            handleIndex(ele,message,msg)
+            handleIndex(ele, message, msg)
             return
-        elif bypasser.ispresent(bypasser.ddl.ddllist,ele):
-            try: temp = bypasser.ddl.direct_link_generator(ele)
-            except Exception as e: temp = "**Error**: " + str(e)
+        elif bypasser.ispresent(bypasser.ddl.ddllist, ele):
+            try:
+                temp = bypasser.ddl.direct_link_generator(ele)
+            except Exception as e:
+                temp = "**Error**: " + str(e)
         elif freewall.pass_paywall(ele, check=True):
             freefile = freewall.pass_paywall(ele)
             if freefile:
-                try: 
+                try:
                     app.send_document(message.chat.id, freefile, reply_to_message_id=message.id)
                     remove(freefile)
-                    app.delete_messages(message.chat.id,[msg.id])
+                    app.delete_messages(message.chat.id, [msg.id])
                     return
-                except: pass
-            else: app.send_message(message.chat.id, "__Failed to Jump", reply_to_message_id=message.id)
-        else:    
+                except:
+                    pass
+            else:
+                app.send_message(message.chat.id, "__Failed to Jump", reply_to_message_id=message.id)
+        else:
             try: temp = bypasser.shortners(ele)
             except Exception as e: temp = "**Error**: " + str(e)
         print("bypassed:",temp)
