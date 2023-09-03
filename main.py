@@ -328,8 +328,14 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
                 reply_to_message_id=message.id,
             )
             return
-    await app.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, i am Link Bypasser Bot, just send me any supported links and i will you get you results.\nCheckout /help to Read More__",
-                           reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("❤️ Owner ❤️", url=f"https://telegram.me/{OWNER_USERNAME}")]]), reply_to_message_id=message.id)
+    await app.send_message(message.chat.id,f"Hᴇʟʟᴏ {message.from_user.mention}👋,\nTʜɪs Is Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀғᴜʟ Lɪɴᴋ Bʏᴘᴀssᴇʀ Bᴏᴛ.\nUsɪɴɢ Tʜɪs Bᴏᴛ Yᴏᴜ Cᴀɴ Bʏᴘᴀᴀs Aɴʏ Lɪɴᴋ Iɴ Jᴜsᴛ Fᴇᴡ Sᴇᴄᴏɴᴅs.\nJᴜsᴛ Sᴇɴᴅ Mᴇ Aɴʏ Sᴜᴘᴘᴏʀᴛᴇᴅ Lɪɴᴋ\nBᴏᴛ Wᴀs Cʀᴇᴀᴛᴇᴅ Bʏ : @SourcePleaseOfficial 💞",
+    reply_markup=InlineKeyboardMarkup([[
+        InlineKeyboardButton("👨‍🔧Owner👨‍🔧", url='https://t.me/thoursbridi')
+        ],[
+        InlineKeyboardButton('📯 Uᴩᴅᴀᴛᴇꜱ', url='https://t.me/SourcePleaseOfficial'),
+        InlineKeyboardButton('💁‍♂️ Sᴜᴩᴩᴏʀᴛ', url='https://t.me/SPxContactBot')
+       ]]), 
+        reply_to_message_id=message.id)
 
 
 # help command
