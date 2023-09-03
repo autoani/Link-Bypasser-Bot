@@ -46,7 +46,7 @@ async def stats_command(_, message):
 
     def get_progress_bar_string(percent, length=10):
         progress = int(length * percent / 100.0)
-        return "[" + "#" * progress + "-" * (length - progress) + "]"
+        return "[" + "⬢" * progress + "⬡" * (length - progress) + "]"
 
     def boot_time():
         return psutil.boot_time()
@@ -67,7 +67,7 @@ async def stats_command(_, message):
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
 
-    stats = f'**Your Bot Statistics**\n\n' \
+    stats = f'**SPxBypass Bot Statistics**\n\n' \
             f'**System Uptime:** `{sys_time}`\n' \
             f'**Bot Uptime:** `{bot_time}`\n\n' \
             f'**CPU:** `{get_progress_bar_string(cpu_usage)} {cpu_usage}%`\n' \
