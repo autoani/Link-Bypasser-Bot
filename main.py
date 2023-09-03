@@ -24,6 +24,7 @@ def getenv(var): return environ.get(var) or DATA.get(var, None)
 bot_token = getenv("TOKEN")
 api_hash = getenv("HASH") 
 api_id = getenv("ID")
+
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 # stats command
@@ -86,8 +87,7 @@ async def stats_command(_, message):
     await app.send_message(
         chat_id=message.chat.id,
         text=stats,
-        parse_mode="html",
-        reply_to_message_id=message.message_id
+        parse_mode="html"
     )
 
 
