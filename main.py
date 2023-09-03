@@ -392,12 +392,9 @@ def send_about(client: pyrogram.client.Client, message: pyrogram.types.messages_
     ])
     app.send_message(message.chat.id, ABOUT_TEXT, reply_markup=reply_markup, reply_to_message_id=message.message_id, disable_web_page_preview=True)
 
-
-@app.on_callback_query(filters.callback_query_data("close_about"))
-def close_about_callback(client: pyrogram.client.Client, callback_query: pyrogram.types.callback_query.CallbackQuery):
-    
+@app.on_callback_query(filters.create(lambda _, __, query: query.data == "close_about"))
+def close_about_callback(client, callback_query):    
     client.delete_messages(callback_query.message.chat.id, callback_query.message.message_id)
-
 
 
 
