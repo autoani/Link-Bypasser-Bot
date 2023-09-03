@@ -65,7 +65,6 @@ async def stats_command(_, message):
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
 
-
     stats = f'<b><i><u>Your Bot Statistics</u></i></b>\n\n' \
             f'<b>System Uptime:</b> <code>{sys_time}</code>\n' \
             f'<b>Bot Uptime:</b> <code>{bot_time}</code>\n\n' \
@@ -83,8 +82,14 @@ async def stats_command(_, message):
             f'<b>Drive In Use:</b> <code>{used}</code> [{disk}%]\n' \
             f'<b>Total:</b> <code>{total}</code> | <b>Free:</b> <code>{free}</code>\n\n' \
             f'<b>UL:</b> <code>{sent}</code> | <b>DL:</b> <code>{recv}</code>\n'
-            
-    await app.send_message(message.chat.id, stats, parse_mode="html", reply_to_message_id=message.message_id)
+
+    await app.send_message(
+        chat_id=message.chat.id,
+        text=stats,
+        parse_mode="html",
+        reply_to_message_id=message.message_id
+    )
+
 
 # handle ineex
 def handleIndex(ele,message,msg):
