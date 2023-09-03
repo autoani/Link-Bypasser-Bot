@@ -14,6 +14,9 @@ from time import time
 import psutil
 from datetime import datetime
 
+botStartTime = time()
+
+
 # bot
 with open('config.json', 'r') as f: DATA = load(f)
 def getenv(var): return environ.get(var) or DATA.get(var, None)
