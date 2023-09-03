@@ -8,7 +8,7 @@ from os import environ, remove
 from threading import Thread
 from json import load
 from re import search
-from texts import HELP_TEXT
+from texts import HELP_TEXT, ABOUT_TEXT
 import bypasser
 import freewall
 from time import time, sleep
