@@ -11,6 +11,77 @@ import bypasser
 import freewall
 from time import time
 
+import psutil
+from datetime import datetime
+
+# stats command
+@app.on_message(filters.command(["stats"]))
+async def stats_command(_, message):
+    def get_readable_time(seconds):
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        days, hours = divmod(hours, 24)
+        return f"{int(days)}d {int(hours)}h {int(minutes)}m {int(seconds)}s"
+
+    def get_readable_file_size(size, decimal_places=2):
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if size < 1024.0:
+                break
+            size /= 1024.0
+        return f"{size:.{decimal_places}f} {unit}"
+
+    def get_progress_bar_string(percent, length=10):
+        progress = int(length * percent / 100.0)
+        return "[" + "#" * progress + "-" * (length - progress) + "]"
+
+    def boot_time():
+        return psutil.boot_time()
+
+    sys_time = get_readable_time(time() - boot_time())
+    bot_time = get_readable_time(time() - botStartTime)
+
+    cpu_usage = psutil.cpu_percent(interval=1)
+    v_core = psutil.cpu_count(logical=True) - psutil.cpu_count(logical=False)
+    memory = psutil.virtual_memory()
+    swap = psutil.swap_memory()
+
+    total, used, free, disk = psutil.disk_usage('/')
+    total = get_readable_file_size(total)
+    used = get_readable_file_size(used)
+    free = get_readable_file_size(free)
+
+    sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
+    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
+
+    if await aiopath.exists('.git'):
+        last_commit = await cmd_exec("git log -1 --date=short --pretty=format:'%cr \n<b>Version: </b> %cd'", True)
+        last_commit = last_commit[0]
+    else:
+        last_commit = 'No UPSTREAM_REPO'
+
+    stats = f'<b><i><u>Your Bot Statistics</u></i></b>\n\n' \
+            f'<b>Updated:</b> {last_commit}\n' \
+            f'<b>System Uptime:</b> <code>{sys_time}</code>\n' \
+            f'<b>Bot Uptime:</b> <code>{bot_time}</code>\n\n' \
+            f'<b>CPU:</b> <code>{get_progress_bar_string(cpu_usage)} {cpu_usage}%</code>\n' \
+            f'<b>CPU Total Core(s):</b> <code>{psutil.cpu_count(logical=True)}</code>\n' \
+            f'<b>P-Core(s):</b> <code>{psutil.cpu_count(logical=False)}</code> | <b>V-Core(s):</b> <code>{v_core}</code>\n' \
+            f'<b>Frequency:</b> <code>{psutil.cpu_freq(percpu=False).current} Mhz</code>\n\n' \
+            f'<b>RAM:</b> <code>{get_progress_bar_string(memory.percent)} {memory.percent}%</code>\n' \
+            f'<b>RAM In Use:</b> <code>{get_readable_file_size(memory.used)}</code> [{memory.percent}%]\n' \
+            f'<b>Total:</b> <code>{get_readable_file_size(memory.total)}</code> | <b>Free:</b> <code>{get_readable_file_size(memory.available)}</code>\n\n' \
+            f'<b>SWAP:</b> <code>{get_progress_bar_string(swap.percent)} {swap.percent}%</code>\n' \
+            f'<b>SWAP In Use:</b> <code>{get_readable_file_size(swap.used)}</code> [{swap.percent}%]\n' \
+            f'<b>Allocated</b> <code>{get_readable_file_size(swap.total)}</code> | <b>Free:</b> <code>{get_readable_file_size(swap.free)}</code>\n\n' \
+            f'<b>DISK:</b> <code>{get_progress_bar_string(disk)} {disk}%</code>\n' \
+            f'<b>Drive In Use:</b> <code>{used}</code> [{disk}%]\n' \
+            f'<b>Total:</b> <code>{total}</code> | <b>Free:</b> <code>{free}</code>\n\n' \
+            f'<b>UL:</b> <code>{sent}</code> | <b>DL:</b> <code>{recv}</code>\n'
+            
+    await app.send_message(message.chat.id, stats, parse_mode="html", reply_to_message_id=message.message_id)
+
+
+
 
 # bot
 with open('config.json', 'r') as f: DATA = load(f)
