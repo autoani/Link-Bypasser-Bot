@@ -14,6 +14,15 @@ from time import time
 import psutil
 from datetime import datetime
 
+# bot
+with open('config.json', 'r') as f: DATA = load(f)
+def getenv(var): return environ.get(var) or DATA.get(var, None)
+
+bot_token = getenv("TOKEN")
+api_hash = getenv("HASH") 
+api_id = getenv("ID")
+app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
+
 # stats command
 @app.on_message(filters.command(["stats"]))
 async def stats_command(_, message):
@@ -79,19 +88,6 @@ async def stats_command(_, message):
             f'<b>UL:</b> <code>{sent}</code> | <b>DL:</b> <code>{recv}</code>\n'
             
     await app.send_message(message.chat.id, stats, parse_mode="html", reply_to_message_id=message.message_id)
-
-
-
-
-# bot
-with open('config.json', 'r') as f: DATA = load(f)
-def getenv(var): return environ.get(var) or DATA.get(var, None)
-
-bot_token = getenv("TOKEN")
-api_hash = getenv("HASH") 
-api_id = getenv("ID")
-app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
-
 
 # handle ineex
 def handleIndex(ele,message,msg):
