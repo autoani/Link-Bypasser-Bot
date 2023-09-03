@@ -379,6 +379,12 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     )
 
 
+# about command
+@app.on_message(filters.command(["about"]))
+def send_about(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    app.send_message(message.chat.id, ABOUT_TEXT, reply_to_message_id=message.id, disable_web_page_preview=True)
+
+
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
