@@ -153,7 +153,7 @@ def loopthread(message, otherss=False):
                 except:
                     pass
             else:
-                app.send_message(message.chat.id, "__Failed to Jump", reply_to_message_id=message.id)
+                app.send_message(message.chat.id, "__Failed to Jump",
         else:
             try: temp = bypasser.shortners(ele)
             except Exception as e: temp = "**Error**: " + str(e)
