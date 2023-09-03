@@ -385,9 +385,6 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     )
 
 
-# Define a global variable to store ABOUT_TEXT
-ABOUT_TEXT = "Your ABOUT_TEXT here"
-
 @app.on_message(filters.command(["about"]))
 def send_about(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     reply_markup = InlineKeyboardMarkup([
@@ -397,7 +394,6 @@ def send_about(client: pyrogram.client.Client, message: pyrogram.types.messages_
 
 @app.on_callback_query(filters.callback_query("close_about"))
 def close_about_callback(client: pyrogram.client.Client, callback_query: pyrogram.types.callback_query.CallbackQuery):
-    # Delete the ABOUT_TEXT message
     client.delete_messages(callback_query.message.chat.id, callback_query.message.message_id)
 
 
