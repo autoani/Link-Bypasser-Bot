@@ -328,7 +328,7 @@ async def send_start(client: pyrogram.client.Client, message: pyrogram.types.mes
                 reply_to_message_id=message.id,
             )
             return
-    await app.send_message(message.chat.id,f"Hᴇʟʟᴏ {message.from_user.mention}👋,\nTʜɪs Is Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀғᴜʟ Lɪɴᴋ Bʏᴘᴀssᴇʀ Bᴏᴛ.\nUsɪɴɢ Tʜɪs Bᴏᴛ Yᴏᴜ Cᴀɴ Bʏᴘᴀᴀs Aɴʏ Lɪɴᴋ Iɴ Jᴜsᴛ Fᴇᴡ Sᴇᴄᴏɴᴅs.\nJᴜsᴛ Sᴇɴᴅ Mᴇ Aɴʏ Sᴜᴘᴘᴏʀᴛᴇᴅ Lɪɴᴋ\nBᴏᴛ Wᴀs Cʀᴇᴀᴛᴇᴅ Bʏ : @SourcePleaseOfficial 💞",
+    await app.send_message(message.chat.id,f"Hᴇʟʟᴏ {message.from_user.mention}👋,\nTʜɪs Is Aᴅᴠᴀɴᴄᴇᴅ Aɴᴅ Pᴏᴡᴇʀғᴜʟ Lɪɴᴋ Bʏᴘᴀssᴇʀ Bᴏᴛ.\nUsɪɴɢ Tʜɪs Bᴏᴛ Yᴏᴜ Cᴀɴ Bʏᴘᴀᴀs Aɴʏ Lɪɴᴋ Iɴ Jᴜsᴛ Fᴇᴡ Sᴇᴄᴏɴᴅs.\nJᴜsᴛ Sᴇɴᴅ Mᴇ Aɴʏ Sᴜᴘᴘᴏʀᴛᴇᴅ Lɪɴᴋ\nBᴏᴛ Wᴀs Cʀᴇᴀᴛᴇᴅ Bʏ : @SourcePleaseOfficial",
     reply_markup=InlineKeyboardMarkup([[
         InlineKeyboardButton("👨‍🔧Owner👨‍🔧", url='https://t.me/thoursbridi')
         ],[
