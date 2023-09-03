@@ -382,27 +382,27 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-        if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
+    if str(message.chat.id).startswith("-100") and message.chat.id not in GROUP_ID:
         return
     if UPDATES_CHANNEL is not None:
         try:
             user = await client.get_chat_member(UPDATES_CHANNEL, message.from_user.id)
-            if user.status == enums.ChatMemberStatus.BANNED:
+            if user.status == pyrogram.enums.ChatMemberStatus.BANNED:
                 await client.send_message(
                     chat_id=message.chat.id,
-                    text=f"__Sorry, you are banned. Contact My [ Owner ](https://telegram.me/{OWNER_USERNAME})__",
+                    text=f"Sorry, you are banned. Contact My [Owner](https://telegram.me/{OWNER_USERNAME})",
                     disable_web_page_preview=True,
                 )
                 return
-        except UserNotParticipant:
+        except pyrogram.errors.UserNotParticipant:
             await client.send_photo(
                 chat_id=message.chat.id,
                 photo="https://te.legra.ph/file/95db9bf6f91bd96d7a9f1.jpg",
                 caption="<i>Join Channel To Use Me🔐</i>",
-                reply_markup=InlineKeyboardMarkup(
+                reply_markup=pyrogram.types.InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton(
+                            pyrogram.types.InlineKeyboardButton(
                                 "Join Now 🔓", url=f"https://t.me/{UPDATES_CHANNEL}"
                             )
                         ]
@@ -413,13 +413,14 @@ async def receive(client: pyrogram.client.Client, message: pyrogram.types.messag
         except Exception as e:
             await client.send_message(
                 chat_id=message.chat.id,
-                text=f"<i>Something went wrong</i> <b> <a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT </a></b> \n\n {e}",
+                text=f"<i>Something went wrong</i> <b><a href='https://telegram.me/{OWNER_USERNAME}'>CLICK HERE FOR SUPPORT</a></b>\n\n{e}",
                 disable_web_page_preview=True,
             )
             return
 
-    bypass = threading.Thread(target=lambda:loopthread(message),daemon=True)
+    bypass = threading.Thread(target=lambda: loopthread(message), daemon=True)
     bypass.start()
+
 
 
 # doc thread
