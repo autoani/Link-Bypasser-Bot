@@ -390,7 +390,11 @@ def send_about(client: pyrogram.client.Client, message: pyrogram.types.messages_
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Close", callback_data="close_about")]
     ])
-    app.send_message(message.chat.id, ABOUT_TEXT, reply_markup=reply_markup, reply_to_message_id=message.message_id, disable_web_page_preview=True)
+    app.send_message(chat_id=message.chat.id, 
+                 text=ABOUT_TEXT, 
+                 reply_markup=reply_markup, 
+                 reply_to_message_id=message.message_id,
+                 disable_web_page_preview=True)
 
 @app.on_callback_query(filters.create(lambda _, __, query: query.data == "close_about"))
 def close_about_callback(client, callback_query):    
