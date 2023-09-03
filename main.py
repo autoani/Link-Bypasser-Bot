@@ -12,7 +12,6 @@ import freewall
 from time import time
 
 import psutil
-import aiopath
 from datetime import datetime
 
 botStartTime = time()
@@ -66,11 +65,6 @@ async def stats_command(_, message):
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
 
-    if await aiopath.exists('.git'):
-        last_commit = await cmd_exec("git log -1 --date=short --pretty=format:'%cr \n<b>Version: </b> %cd'", True)
-        last_commit = last_commit[0]
-    else:
-        last_commit = 'No UPSTREAM_REPO'
 
     stats = f'<b><i><u>Your Bot Statistics</u></i></b>\n\n' \
             f'<b>Updated:</b> {last_commit}\n' \
