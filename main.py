@@ -28,6 +28,8 @@ api_id = getenv("ID")
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
 
+
+
 # stats command
 @app.on_message(filters.command(["stats"]))
 async def stats_command(_, message):
@@ -65,7 +67,7 @@ async def stats_command(_, message):
     free = get_readable_file_size(free)
 
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
-    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
+    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv())
 
     stats = f'**Your Bot Statistics**\n\n' \
             f'**System Uptime:** `{sys_time}`\n' \
@@ -87,8 +89,7 @@ async def stats_command(_, message):
 
     await app.send_message(
         chat_id=message.chat.id,
-        text=stats,
-        parse_mode="markdown"
+        text=stats
     )
 
 
