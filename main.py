@@ -27,6 +27,7 @@ api_id = getenv("ID")
 
 app = Client("my_bot",api_id=api_id, api_hash=api_hash,bot_token=bot_token)  
 
+
 # stats command
 @app.on_message(filters.command(["stats"]))
 async def stats_command(_, message):
@@ -66,28 +67,28 @@ async def stats_command(_, message):
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
 
-    stats = f'<b><i><u>Your Bot Statistics</u></i></b>\n\n' \
-            f'<b>System Uptime:</b> <code>{sys_time}</code>\n' \
-            f'<b>Bot Uptime:</b> <code>{bot_time}</code>\n\n' \
-            f'<b>CPU:</b> <code>{get_progress_bar_string(cpu_usage)} {cpu_usage}%</code>\n' \
-            f'<b>CPU Total Core(s):</b> <code>{psutil.cpu_count(logical=True)}</code>\n' \
-            f'<b>P-Core(s):</b> <code>{psutil.cpu_count(logical=False)}</code> | <b>V-Core(s):</b> <code>{v_core}</code>\n' \
-            f'<b>Frequency:</b> <code>{psutil.cpu_freq(percpu=False).current} Mhz</code>\n\n' \
-            f'<b>RAM:</b> <code>{get_progress_bar_string(memory.percent)} {memory.percent}%</code>\n' \
-            f'<b>RAM In Use:</b> <code>{get_readable_file_size(memory.used)}</code> [{memory.percent}%]\n' \
-            f'<b>Total:</b> <code>{get_readable_file_size(memory.total)}</code> | <b>Free:</b> <code>{get_readable_file_size(memory.available)}</code>\n\n' \
-            f'<b>SWAP:</b> <code>{get_progress_bar_string(swap.percent)} {swap.percent}%</code>\n' \
-            f'<b>SWAP In Use:</b> <code>{get_readable_file_size(swap.used)}</code> [{swap.percent}%]\n' \
-            f'<b>Allocated</b> <code>{get_readable_file_size(swap.total)}</code> | <b>Free:</b> <code>{get_readable_file_size(swap.free)}</code>\n\n' \
-            f'<b>DISK:</b> <code>{get_progress_bar_string(disk)} {disk}%</code>\n' \
-            f'<b>Drive In Use:</b> <code>{used}</code> [{disk}%]\n' \
-            f'<b>Total:</b> <code>{total}</code> | <b>Free:</b> <code>{free}</code>\n\n' \
-            f'<b>UL:</b> <code>{sent}</code> | <b>DL:</b> <code>{recv}</code>\n'
+    stats = f'**Your Bot Statistics**\n\n' \
+            f'**System Uptime:** `{sys_time}`\n' \
+            f'**Bot Uptime:** `{bot_time}`\n\n' \
+            f'**CPU:** `{get_progress_bar_string(cpu_usage)} {cpu_usage}%`\n' \
+            f'**CPU Total Core(s):** `{psutil.cpu_count(logical=True)}`\n' \
+            f'**P-Core(s):** `{psutil.cpu_count(logical=False)}` | **V-Core(s):** `{v_core}`\n' \
+            f'**Frequency:** `{psutil.cpu_freq(percpu=False).current} Mhz`\n\n' \
+            f'**RAM:** `{get_progress_bar_string(memory.percent)} {memory.percent}%`\n' \
+            f'**RAM In Use:** `{get_readable_file_size(memory.used)}` [{memory.percent}%]\n' \
+            f'**Total:** `{get_readable_file_size(memory.total)}` | **Free:** `{get_readable_file_size(memory.available)}`\n\n' \
+            f'**SWAP:** `{get_progress_bar_string(swap.percent)} {swap.percent}%`\n' \
+            f'**SWAP In Use:** `{get_readable_file_size(swap.used)}` [{swap.percent}%]\n' \
+            f'**Allocated:** `{get_readable_file_size(swap.total)}` | **Free:** `{get_readable_file_size(swap.free)}`\n\n' \
+            f'**DISK:** `{get_progress_bar_string(disk)} {disk}%`\n' \
+            f'**Drive In Use:** `{used}` [{disk}%]\n' \
+            f'**Total:** `{total}` | **Free:** `{free}`\n\n' \
+            f'**UL:** `{sent}` | **DL:** `{recv}`'
 
     await app.send_message(
         chat_id=message.chat.id,
         text=stats,
-        parse_mode="html"
+        parse_mode="markdown"
     )
 
 
