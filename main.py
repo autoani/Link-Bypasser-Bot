@@ -67,7 +67,6 @@ async def stats_command(_, message):
 
 
     stats = f'<b><i><u>Your Bot Statistics</u></i></b>\n\n' \
-            f'<b>Updated:</b> {last_commit}\n' \
             f'<b>System Uptime:</b> <code>{sys_time}</code>\n' \
             f'<b>Bot Uptime:</b> <code>{bot_time}</code>\n\n' \
             f'<b>CPU:</b> <code>{get_progress_bar_string(cpu_usage)} {cpu_usage}%</code>\n' \
