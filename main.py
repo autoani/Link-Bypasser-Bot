@@ -401,7 +401,6 @@ def close_about_callback(client, callback_query):
     client.delete_messages(callback_query.message.chat.id, callback_query.message.message_id)
 
 
-
 # links
 @app.on_message(filters.text)
 async def receive(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
