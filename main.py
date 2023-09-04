@@ -385,23 +385,33 @@ async def send_help(client: pyrogram.client.Client, message: pyrogram.types.mess
     )
 
 
+message_ids = {}
+
 @app.on_message(filters.command(["about"]))
 def send_about(client, message):
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Close", callback_data="close_about")]
     ])
     
-    client.send_message(
+    sent_message = client.send_message(
         chat_id=message.chat.id, 
         text=ABOUT_TEXT, 
         reply_markup=reply_markup, 
-        reply_to_message_id=message.message_id,  # Use message.message_id as the reply_to_message_id
         disable_web_page_preview=True
     )
+    
+    message_ids[message.chat.id] = sent_message.message_id
 
 @app.on_callback_query(filters.create(lambda _, __, query: query.data == "close_about"))
-def close_about_callback(client, callback_query):    
-    client.delete_messages(callback_query.message.chat.id, callback_query.message.message_id)
+def close_about_callback(client, callback_query):
+    chat_id = callback_query.message.chat.id
+    message_id = message_ids.get(chat_id)
+    
+    if message_id:
+        client.delete_messages(chat_id, message_id)
+    
+    client.delete_messages(chat_id, callback_query.message.message_id)
+
 
 
 # links
