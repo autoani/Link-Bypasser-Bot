@@ -391,17 +391,11 @@ def send_about(client, message):
         [InlineKeyboardButton("Close", callback_data="close_about")]
     ])
     
-    # Check if 'message' object has 'message_id' attribute
-    if hasattr(message, "message_id"):
-        reply_to_message_id = message.message_id
-    else:
-        reply_to_message_id = None
-    
     client.send_message(
         chat_id=message.chat.id, 
         text=ABOUT_TEXT, 
         reply_markup=reply_markup, 
-        reply_to_message_id=reply_to_message_id,
+        reply_to_message_id=message.message_id,  # Use message.message_id as the reply_to_message_id
         disable_web_page_preview=True
     )
 
