@@ -9,7 +9,7 @@ from uuid import uuid4
 from bs4 import BeautifulSoup
 from cfscrape import create_scraper
 from lxml import etree
-from requests import Session, get as rget
+from requests import session, Session, get as rget
 
 from json import load
 from os import environ
