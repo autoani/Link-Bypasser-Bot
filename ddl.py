@@ -205,7 +205,7 @@ def mediafire(url: str) -> str:
 		page = cget('get', url).text
 	except Exception as e:
 		return (f"ERROR: {e.__class__.__name__}")
-	final_link = findall(r"\'(https?:\/\/download\d+\.mediafire\.com\/\S+\/\S+\/\S+)\'", page)
+	final_link = findall(r"\'(bhttps?://.*mediafire\.com\S+)\'", page)
 	if not final_link:return ("ERROR: No links found in this page")
 	return final_link[0]
 
