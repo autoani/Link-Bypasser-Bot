@@ -197,7 +197,7 @@ def uptobox(url: str) -> str:
 
 
 def mediafire(url: str) -> str:
-	final_link = findall(r'https?:\/\/download\d+\.mediafire\.com\/\S+\/\S+\/\S+', url)
+	final_link = findall(r'\bhttps?://.*mediafire\.com\S+', url)
 	if final_link: return final_link[0]
 	cget = create_scraper().request
 	try:
