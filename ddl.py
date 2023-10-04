@@ -197,17 +197,13 @@ def uptobox(url: str) -> str:
 
 
 def mediafire(url: str) -> str:
-	final_link = findall(r'\bhttps?://.*mediafire\.com\S+', url)
-	if final_link: return final_link[0]
-	cget = create_scraper().request
-	try:
-		url = cget('get', url).url
-		page = cget('get', url).text
-	except Exception as e:
-		return (f"ERROR: {e.__class__.__name__}")
-	final_link = findall(r"\'(bhttps?://.*mediafire\.com\S+)\'", page)
-	if not final_link:return ("ERROR: No links found in this page")
-	return final_link[0]
+    try:
+        link = findall(r'\bhttps?://.*mediafire\.com\S+', url)[0]
+    except IndexError:
+        raise ("No MediaFire links found")
+    page = BeautifulSoup(rget(link).content, 'lxml')
+    info = page.find('a', {'aria-label': 'Download file'})
+    return info.get('href')
 
 
 def osdn(url: str) -> str:
