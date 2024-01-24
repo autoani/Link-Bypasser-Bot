@@ -35,6 +35,8 @@ OWNER_USERNAME = "thoursbridi"
 UPDATES_CHANNEL = "SourcePleaseOfficial"
 OWNER_ID = int(os.environ.get("OWNER_ID", 5468192421))
 ADMIN_LIST = [int(ch) for ch in (os.environ.get("ADMIN_LIST", f"{OWNER_ID}")).split()]
+PERMANENT_GROUP = os.environ.get("PERMANENT_GROUP", "")
+GROUP_ID = [int(ch) for ch in (os.environ.get("GROUP_ID", f"{PERMANENT_GROUP}")).split()]
 U_NAME = os.environ.get("BOT_USERNAME", "DirectLink_BypasserAdsBot")
 DB_URL = os.environ.get("DB_URL", "mongodb+srv://aio:aio@aio.5z4gxok.mongodb.net/?retryWrites=true&w=majority")
 
